@@ -1,7 +1,9 @@
 # Installation
 
-## Kind
+## Bootstrap
 
-run go install sigs.k8s.io/kind@v0.29.0 && kind create cluster
-
-## FluxCD
+```
+cd bootsrap
+terraform init
+terraform apply
+```

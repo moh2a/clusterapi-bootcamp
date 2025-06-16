@@ -8,6 +8,11 @@ resource "kind_cluster" "this" {
   kind_config {
     kind        = "Cluster"
     api_version = "kind.x-k8s.io/v1alpha4"
+    networking {
+      disable_default_cni = true
+      pod_subnet          = "10.10.0.0/16"
+      service_subnet      = "10.11.0.0/16"
+    }
     node {
       role = "control-plane"
       extra_mounts {
@@ -54,8 +59,11 @@ resource "github_repository_deploy_key" "this" {
 # ==========================================
 
 resource "flux_bootstrap_git" "this" {
-  depends_on = [github_repository_deploy_key.this, kind_cluster.this]
+  depends_on = [github_repository_deploy_key.this]
 
   embedded_manifests = true
   path               = "gitops/clusters/master"
+  lifecycle {
+    replace_triggered_by = [kind_cluster.this]
+  }
 }

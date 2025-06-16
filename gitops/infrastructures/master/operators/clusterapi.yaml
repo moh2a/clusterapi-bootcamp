@@ -46,23 +46,3 @@ spec:
         enabled: true
     cert-manager:
       enabled: true
-    manager:
-      featureGates:
-        core:
-          ClusterToplogy: true
-          ClusterResourceSet: "true"
-          KubeadmBootstrapFormatIgnition: "true"
-        kubeadm:
-          ClusterTopology: true
-    configSecret:
-      name: config-vars
-      namespace: default
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: config-vars
-  namespace: default
-type: Opaque
-stringData:
-  CLUSTER_TOPOLOGY: "true"

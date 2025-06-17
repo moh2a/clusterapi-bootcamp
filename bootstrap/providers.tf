@@ -20,6 +20,10 @@ terraform {
       source  = "hashicorp/helm"
       version = "~> 2.17"
     }
+    docker = {
+      source  = "kreuzwerker/docker"
+      version = "3.6.2"
+    }
   }
 }
 
@@ -51,5 +55,8 @@ provider "helm" {
   kubernetes {
     config_path = var.kubeconfig_path
   }
+}
 
+provider "docker" {
+  host = "unix:///var/run/docker.sock"
 }

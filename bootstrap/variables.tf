@@ -13,3 +13,9 @@ variable "github_repository" {
   description = "GitHub repository"
   type        = string
 }
+
+variable "kubeconfig_path" {
+  type        = string
+  default     = "./master-config"
+  description = "Kubeconfig file path where kind cluster should save it."
+}

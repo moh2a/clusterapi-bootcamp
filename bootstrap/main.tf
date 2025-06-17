@@ -3,8 +3,8 @@
 # ==========================================
 
 resource "kind_cluster" "this" {
-  name           = "master"
-  wait_for_ready = true
+  kubeconfig_path = var.kubeconfig_path
+  name            = "master"
   kind_config {
     kind        = "Cluster"
     api_version = "kind.x-k8s.io/v1alpha4"
@@ -58,12 +58,22 @@ resource "github_repository_deploy_key" "this" {
 # Bootstrap KinD cluster
 # ==========================================
 
+resource "helm_release" "cilium" {
+  depends_on = [kind_cluster.this]
+  name       = "cilium"
+  repository = "https://helm.cilium.io"
+  chart      = "cilium"
+  version    = "1.17.0"
+  namespace  = "kube-system"
+  set {
+    name  = "ipam.mode"
+    value = "kubernetes"
+  }
+}
+
 resource "flux_bootstrap_git" "this" {
-  depends_on = [github_repository_deploy_key.this]
+  depends_on = [github_repository_deploy_key.this, kind_cluster.this]
 
   embedded_manifests = true
   path               = "gitops/clusters/master"
-  lifecycle {
-    replace_triggered_by = [kind_cluster.this]
-  }
 }

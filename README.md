@@ -2,9 +2,9 @@
 
 ## Outils
 
-Installers les programmes suivants
+Avoir un environnement linux avec docker
+Installer les programmes suivants
 
-- docker
 - kubectl
 - terraform
 
@@ -37,9 +37,9 @@ terraform init
 terraform apply -var "github_org=<orgname>" -var "github_token=<pat>"
 ```
 
-## Kubezen (premier cluster avec clusterapi)
+# Kubezen (premier cluster avec clusterapi)
 
-### Création
+## Création
 
 Pour créer kubezen, executer la commande :
 
@@ -47,7 +47,7 @@ Pour créer kubezen, executer la commande :
 kubectl apply -f samples/clusters/kubezen.yaml
 ```
 
-### Récupérer le kubeconfig
+## Récupérer le kubeconfig
 
 Pour récupérer le kubeconfig, executer les commandes :
 
@@ -56,7 +56,7 @@ KUBEZEN_SERVER=localhost:$(docker inspect -f '{{ (index (index .NetworkSettings.
 kubectl get secret -n kubezen kubezen-kubeconfig -o jsonpath="{.data.value}" | base64 -d | sed "s/kubezen-lb:6443/${KUBEZEN_SERVER}/g" > kubezen-config
 ```
 
-### Tester
+## Tester
 
 Executer la commande :
 

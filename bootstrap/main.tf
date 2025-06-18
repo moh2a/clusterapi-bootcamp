@@ -2,26 +2,15 @@
 # Construct KinD cluster
 # ==========================================
 
-resource "docker_network" "kind_network" {
-  name   = "kind-fixed-subnet"
-  driver = "bridge"
-
-  ipam_config {
-    subnet  = "172.18.0.0/16"
-    gateway = "172.18.0.1"
-  }
-}
 resource "kind_cluster" "this" {
   kubeconfig_path = var.kubeconfig_path
   name            = "master"
   kind_config {
+
     kind        = "Cluster"
     api_version = "kind.x-k8s.io/v1alpha4"
     networking {
-      api_server_address  = "172.18.0.103"
       disable_default_cni = true
-      pod_subnet          = "10.10.0.0/16"
-      service_subnet      = "10.11.0.0/16"
     }
     node {
       role = "control-plane"

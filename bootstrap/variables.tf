@@ -12,6 +12,7 @@ variable "github_org" {
 variable "github_repository" {
   description = "GitHub repository"
   type        = string
+  default     = "clusterapi-bootcamp"
 }
 
 variable "kubeconfig_path" {

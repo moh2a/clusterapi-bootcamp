@@ -24,7 +24,7 @@ spec:
   chart:
     spec:
       chart: cluster-api-operator
-      version: "0.20.*"
+      version: "0.22.*"
       sourceRef:
         kind: HelmRepository
         name: capi-operator
